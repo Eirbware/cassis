@@ -8,14 +8,27 @@ services:
       - mongodb
     ports:
       - '3000:3000'
+    networks:
+      - cassis-mongo
+      - cassis
 
   mongodb:
     image: mongo:latest
     container_name: nuxt-mongo
     ports:
       - '27017:27017'
+    networks:
+      - cassis-mongo
     volumes:
       - mongodbdata:/data/db
+
+networks:
+  cassis-mongo:
+    driver: bridge
+
+  cassis:
+    external:
+      name: eirb_connect
 
 volumes:
   mongodbdata:

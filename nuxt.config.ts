@@ -5,6 +5,7 @@ export default defineNuxtConfig({
     public: {
       BASE_URL: process.env.BASE_URL,
       EIRB_AUTH_URL: process.env.EIRB_AUTH_URL,
+      EIRB_AUTH_URL_LOCAL: process.env.EIRB_AUTH_URL_LOCAL,
     }
   },
   modules: [
