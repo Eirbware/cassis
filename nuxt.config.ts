@@ -24,7 +24,7 @@ export default defineNuxtConfig({
   googleFonts: {
     families: {
       Unbounded: true,
-      Inter: true
+      Inter: [400, 700]
     }
   },
   css: ['~/assets/css/main.css'],
