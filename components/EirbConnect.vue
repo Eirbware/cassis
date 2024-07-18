@@ -1,8 +1,8 @@
 <template>
-  <div
+  <button
     class="ease flex w-fit cursor-pointer flex-row-reverse items-center justify-center gap-2 rounded-sm bg-[#EAB308] p-2 pr-4 transition duration-300 hover:shadow-md"
   >
-    <div class="leading-5 text-white">
+    <div class="leading-5 text-white flex flex-col items-start">
       S’identifier avec <br />
       <span class="font-semibold">EirbConnect</span>
     </div>
@@ -79,5 +79,5 @@
         stroke-width="0.5"
       />
     </svg>
-  </div>
+  </button>
 </template>
