@@ -55,7 +55,18 @@
     <div class="flex items-center gap-3">
       <img :src="qrcode" alt="QR Code" class="h-28 object-contain" />
       <div class="flex flex-col gap-2">
-        <a :href="link.url" target="_blank">{{ link.url }}</a>
+        <div v-if="!editing" class="flex gap-2">
+          <a :href="link.url" target="_blank">{{ link.url }}</a>
+          <button @click="editing = !editing">
+            <EditIcon />
+          </button>
+        </div>
+        <div v-else class="flex gap-2">
+          <input type="url" v-model="editedURL" />
+          <button @click="editURL()">
+            <CheckIcon />
+          </button>
+        </div>
         <a :href="shortUrl" class="text-primary">{{ shortUrl }}</a>
       </div>
     </div>
@@ -70,6 +81,28 @@ import type { SerializedLink } from '~/utils/Link'
 const props = defineProps<{
   link: SerializedLink
 }>()
+
+const emit = defineEmits<{
+  edited: []
+}>()
+
+const editing = ref(false)
+const editedURL = ref(props.link.url)
+
+const authStore = useAuthStore()
+
+async function editURL() {
+  if (editedURL.value !== props.link.url) {
+    await useFetch('/api/edit', {
+      method: 'POST',
+      body: JSON.stringify({ ...props.link, url: editedURL.value }),
+      query: { token: authStore.token }
+    })
+    emit('edited')
+  }
+
+  editing.value = false
+}
 
 const shortUrl = computed(() => {
   return `${config.public.BASE_URL}/r/${props.link.uid}`

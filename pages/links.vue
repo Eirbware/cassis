@@ -10,7 +10,7 @@
       </NuxtLink>
     </div>
     <div class="flex w-full flex-col" v-else>
-      <LinkCard :link="link" v-for="link in links" />
+      <LinkCard :link="link" v-for="link in links" @edited="fetchLinks()" @removed="fetchLinks()" />
     </div>
   </div>
 </template>
@@ -24,20 +24,30 @@ definePageMeta({
 
 const links = ref<SerializedLink[]>([])
 
-onMounted(() => {
-  const authStore = useAuthStore()
+const authStore = useAuthStore()
 
-  const fetchLinks = async (token: string) => {
-    $fetch(`/api/links/${authStore.user?.user}`, {
+async function fetchLinks() {
+  const res = await useFetch<{ statusCode: number; body: SerializedLink[] }>(
+    `/api/links/${authStore.user?.user}`,
+    {
       query: {
-        token: token
+        token: authStore.token
       }
+    }
+  )
+
+  if (res.data.value) {
+    links.value.splice(0)
+
+    res.data.value.body.forEach((link: unknown) => {
       links.value.push(link as SerializedLink)
     })
   }
+}
 
+onMounted(() => {
   if (authStore.token) {
-    fetchLinks(authStore.token)
+    fetchLinks()
   }
 })
 </script>
