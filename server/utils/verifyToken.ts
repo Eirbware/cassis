@@ -8,8 +8,8 @@ export const verifyToken = async (
     (res) => res.json()
   ).catch((err) => {
     console.error('Error while fetching user info')
-    console.error(err)
-    return null;
+      console.error('Error while fetching user info', err)
+      return null
   })
 
   if (!user) {
