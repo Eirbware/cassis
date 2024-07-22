@@ -15,12 +15,13 @@
 </template>
 
 <script setup lang="ts">
+import type { SerializedLink } from '~/utils/Link'
+
 definePageMeta({
   middleware: 'auth'
 })
 
-const links = ref<Link[]>([])
-
+const links = ref<SerializedLink[]>([])
 
 onMounted(() => {
   const authStore = useAuthStore()
@@ -30,10 +31,7 @@ onMounted(() => {
       query: {
         token: token
       }
-    }).then((res) => {
-      res.body.forEach((link: unknown) => {
-        links.value.push(link as Link)
-      })
+      links.value.push(link as SerializedLink)
     })
   }
 

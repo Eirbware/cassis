@@ -1,6 +1,14 @@
-export type Link = {
+interface Link {
   uid: string
   url: string
-  createdAt: string
-  visited: string
+  createdAt: Date
+  createdBy: string
+  expiresAt: Date | null
+  visited: number
 }
+
+type SerializedLink = Exclude<Link, 'createdAt' | 'expiresAt' | 'createdBy'> & {
+  createdAt: string
+}
+
+export type { Link, SerializedLink }
