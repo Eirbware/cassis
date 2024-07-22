@@ -50,12 +50,13 @@ const link = ref({
 
 async function createLink() {
   if (!link.value.url) return
-  const ret = $fetch('/api/new', {
+
+  await useFetch('/api/new', {
     method: 'POST',
     body: JSON.stringify(link.value),
     query: { token: authStore.token }
   })
 
-  ret.then((): unknown => navigateTo('/links'))
+  navigateTo('/links')
 }
 </script>
