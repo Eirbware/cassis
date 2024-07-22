@@ -2,7 +2,7 @@
 
 ## Description
 
-CASSIS permet de protéger une ressource derrière une url racourcie qui peut être déchiffrée par un utilisateur possédant les droits sur le lien. Ces ressources peuvent être des url ou du texte (bientot) 
+CASSIS permet de protéger une ressource derrière une url racourcie qui peut être déchiffrée par un utilisateur possédant les droits sur le lien. Ces ressources peuvent être des url ou du texte (bientot)
 Pour créer ces ressources, une interface graphique et une api sont proposées. Cette interface graphique permet aussi de visualiser les ressources proposées ainsi que quelques statistiques comme le nombre de visites.
 
 ## Table des matières
@@ -64,6 +64,7 @@ cp .env.docker .env
 ```
 
 ### Démarrer le serveur
+
 On peut ensuite lancer le serveur avec docker compose.
 
 ```bash
@@ -76,8 +77,6 @@ docker compose up --detach
 docker compose down
 ```
 
-
 ## Utilisation
 
 > Comming soon
-

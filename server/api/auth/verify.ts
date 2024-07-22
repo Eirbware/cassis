@@ -1,5 +1,4 @@
 export default defineEventHandler(async (event) => {
-
   const token = getQuery(event).token
 
   if (!token) {

@@ -56,6 +56,7 @@ export default defineEventHandler(async (event) => {
         uid: link.uid
       }
     }
+
     // Sinon, on crée un nouveau lien
 
     const date = new Date()

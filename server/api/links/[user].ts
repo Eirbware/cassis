@@ -25,12 +25,11 @@ export default defineEventHandler(async (event) => {
 
   return {
     statusCode: 200,
-    body:
-      links.map((link) => ({
-        uid: link.uid,
-        url: link.url,
-        createdAt: link.createdAt,
-        visited: link.visited
-      }))
+    body: links.map((link) => ({
+      uid: link.uid,
+      url: link.url,
+      createdAt: link.createdAt,
+      visited: link.visited
+    }))
   }
 })

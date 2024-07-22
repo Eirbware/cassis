@@ -1,13 +1,15 @@
 <template>
   <div class="flex w-full flex-col gap-3 border-b border-secondary/35 py-4">
     <!-- <h1 class="text-accent">{{ shortUrl }}</h1> -->
-    <div class="flex gap-3 rounded-lg bg-secondary/20 p-2 flex-wrap">
+    <div class="flex flex-wrap gap-3 rounded-lg bg-secondary/20 p-2">
       <div class="flex items-stretch gap-3">
         <div class="flex w-fit gap-3 rounded-md bg-primary px-3 py-2 text-sm text-background">
           <UsersIcon size="1.5x" />
           Destinataires
         </div>
-        <div class="flex w-fit cursor-not-allowed gap-3 rounded-md bg-background px-3 py-2 text-sm text-foreground">
+        <div
+          class="flex w-fit cursor-not-allowed gap-3 rounded-md bg-background px-3 py-2 text-sm text-foreground"
+        >
           Tous
         </div>
       </div>
@@ -17,7 +19,9 @@
           <ClockIcon size="1.5x" />
           Expiration
         </div>
-        <div class="flex w-fit cursor-not-allowed gap-3 rounded-md bg-background px-3 py-2 text-sm text-foreground">
+        <div
+          class="flex w-fit cursor-not-allowed gap-3 rounded-md bg-background px-3 py-2 text-sm text-foreground"
+        >
           Jamais
         </div>
       </div>
@@ -27,7 +31,9 @@
           <EyeIcon size="1.5x" />
           Visité
         </div>
-        <div class="flex w-fit cursor-not-allowed gap-3 rounded-md bg-background px-3 py-2 text-sm text-foreground">
+        <div
+          class="flex w-fit cursor-not-allowed gap-3 rounded-md bg-background px-3 py-2 text-sm text-foreground"
+        >
           {{ link.visited }} fois
         </div>
       </div>
@@ -37,7 +43,9 @@
           <CalendarIcon size="1.5x" />
           Créé
         </div>
-        <div class="flex w-fit cursor-not-allowed gap-3 rounded-md bg-background px-3 py-2 text-sm text-foreground">
+        <div
+          class="flex w-fit cursor-not-allowed gap-3 rounded-md bg-background px-3 py-2 text-sm text-foreground"
+        >
           Le {{ new Date(link.createdAt.split('T')[0]).toLocaleDateString() }}
           à
           {{ getFormattedHours(link.createdAt) }}
