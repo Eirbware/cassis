@@ -2,7 +2,7 @@ export default defineEventHandler(async (event) => {
   const token = getQuery(event).token
 
   const tokenVerified = await verifyToken(token as string).then((user) =>
-    user.user ? true : false
+    'user' in user ? true : false
   )
 
   if (!tokenVerified) {
