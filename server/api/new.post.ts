@@ -1,3 +1,5 @@
+import { isBodyWithProps } from '../utils/checks'
+
 const shorten = (num: number) => {
   const alphabet: string = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789$_+!*()'
   let result: string = ''
@@ -26,21 +28,12 @@ export default defineEventHandler(async (event) => {
     }
   }
 
-  const body = await readBody(event)
-
-  const formatURL = (url: string) => {
-    if (!url.startsWith('http://') && !url.startsWith('https://')) {
-      return 'http://' + url
-    }
-    return url
-  }
+  const body = (await readBody(event)) as unknown
 
   try {
-    body.url = formatURL(body.url.toLowerCase())
-
     // Vérification des données
 
-    if (!body.url) {
+    if (!isBodyWithProps(body, ['url'] as const))
       throw createError({
         statusCode: 400,
         statusMessage: 'Url manquante'
