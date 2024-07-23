@@ -1,3 +1,4 @@
+import { formatURL } from '../utils/URL'
 import { isBodyWithProps } from '../utils/checks'
 
 const shorten = (num: number) => {
@@ -38,13 +39,12 @@ export default defineEventHandler(async (event) => {
         statusCode: 400,
         statusMessage: 'Url manquante'
       })
-    }
+    const url = formatURL(body.url.toLowerCase())
 
     // Si le lien existe déjà, on le retourne
 
-    const link = await LinkShema.findOne({
-      url: body.url
-    })
+    const link = await LinkShema.findOne({ url })
+
     if (link) {
       return {
         uid: link.uid
@@ -54,7 +54,7 @@ export default defineEventHandler(async (event) => {
 
     const date = new Date()
     const entry = await new LinkShema({
-      url: encodeURI(body.url),
+      url: encodeURI(url),
       uid: shorten(date.getTime()),
       createdAt: date,
       createdBy: body.createdBy,
