@@ -1,4 +1,8 @@
-export const verifyToken = async (token: string) => {
+import { isUser } from '~/utils/User'
+
+export const verifyToken = async (
+  token: string
+): Promise<User | { statusCode: number; body: string }> => {
   const config = useRuntimeConfig()
   const user = await fetch(`${config.public.EIRB_AUTH_URL_LOCAL}/get_user_info?token=${token}`).then(
     (res) => res.json()
@@ -15,8 +19,7 @@ export const verifyToken = async (token: string) => {
     }
   }
 
-
-  if (!user.user) {
+  if (!isUser(user)) {
     return {
       statusCode: 401,
       body: 'Unauthorized'

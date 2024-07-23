@@ -5,7 +5,7 @@ export default defineEventHandler(async (event) => {
 
   const user = await verifyToken(token as string)
 
-  if (!user.user || !token) {
+  if (!('user' in user) || !token) {
     return {
       statusCode: 401,
       body: {
