@@ -37,7 +37,7 @@ export default defineEventHandler(async (event) => {
     if (!isBodyWithProps(body, ['url'] as const))
       throw createError({
         statusCode: 400,
-        statusMessage: 'Url manquante'
+        statusMessage: 'URL manquante'
       })
     if (typeof body.url !== 'string')
       throw createError({
