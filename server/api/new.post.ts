@@ -63,7 +63,7 @@ export default defineEventHandler(async (event) => {
       url: encodeURI(url),
       uid: shorten(date.getTime()),
       createdAt: date,
-      createdBy: body.createdBy,
+      createdBy: user.user,
       visited: 0,
       expiresAt: body.expiresAt ? new Date(body.expiresAt) : null
     }).save()
