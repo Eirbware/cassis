@@ -32,16 +32,14 @@ export default defineEventHandler(async (event) => {
         statusMessage: 'UID invalide'
       })
 
-    const uid = formatURL(body.uid.toLowerCase())
-
     // Le Lien existe
 
-    const link = await LinkShema.findOne({ uid })
+    const link = await LinkShema.findOne({ uid: body.uid })
 
     if (!link)
       throw createError({
         statusCode: 400,
-        statusMessage: `Le lien d'UID ${uid} n'existe pas`
+        statusMessage: `Le lien d'UID ${body.uid} n'existe pas`
       })
 
     // Le lien appartient bien à l'utilisateur
