@@ -1,4 +1,5 @@
 import { formatURL } from '../utils/URL'
+import { isBodyWithProps } from '../utils/checks'
 
 export default defineEventHandler(async (event) => {
   const token = getQuery(event).token
