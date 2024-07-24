@@ -30,7 +30,7 @@
         id="link"
         @keyup.enter="createLink()"
         class="w-full rounded-md bg-secondary/20 p-3 text-foreground outline-none transition-all duration-200 ease-in-out focus:ring-2 focus:ring-primary focus:ring-opacity-50"
-        type="text"
+        type="url"
         placeholder="https://wei.eirb.fr"
         v-model="link.url"
       />
