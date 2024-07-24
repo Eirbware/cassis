@@ -65,7 +65,8 @@ export default defineEventHandler(async (event) => {
       createdAt: date,
       createdBy: user.user,
       visited: 0,
-      expiresAt: body.expiresAt ? new Date(body.expiresAt) : null
+      expiresAt:
+        'expiresAt' in body && typeof body.expiresAt === 'number' ? new Date(body.expiresAt) : null
     }).save()
 
     return {
