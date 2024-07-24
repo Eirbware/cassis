@@ -23,22 +23,30 @@ definePageMeta({
 
 const links = ref<SerializedLink[]>([])
 
-onMounted(() => {
-  const authStore = useAuthStore()
+const authStore = useAuthStore()
 
+async function fetchLinks() {
   const res = await useFetch<{ statusCode: number; body: SerializedLink[] }>(
     `/api/links/${authStore.user?.user}`,
     {
       query: {
-        token: token
+        token: authStore.token
       }
+    }
+  )
+
+  if (res.data.value) {
+    links.value.splice(0)
+
     res.data.value.body.forEach((link: unknown) => {
       links.value.push(link as SerializedLink)
     })
   }
+}
 
+onMounted(() => {
   if (authStore.token) {
-    fetchLinks(authStore.token)
+    fetchLinks()
   }
 })
 </script>
