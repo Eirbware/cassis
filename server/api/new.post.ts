@@ -39,6 +39,12 @@ export default defineEventHandler(async (event) => {
         statusCode: 400,
         statusMessage: 'Url manquante'
       })
+    if (typeof body.url !== 'string')
+      throw createError({
+        statusCode: 400,
+        statusMessage: 'URL invalide'
+      })
+
     const url = formatURL(body.url.toLowerCase())
 
     // Si le lien existe déjà, on le retourne

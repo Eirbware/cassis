@@ -57,8 +57,10 @@
 <script setup lang="ts">
 const config = useRuntimeConfig()
 
+import type { SerializedLink } from '~/utils/Link'
+
 const props = defineProps<{
-  link: Link
+  link: SerializedLink
 }>()
 
 const shortUrl = computed(() => {
