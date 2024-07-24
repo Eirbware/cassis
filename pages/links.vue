@@ -9,7 +9,7 @@
 
     </div>
     <div class="flex w-full flex-col" v-else>
-      <LinkCard :link="link" v-for="link in links" @edited="fetchLinks()"" />
+      <LinkCard :link="link" v-for="link in links" @edited="fetchLinks()" @removed="fetchLinks()" />
     </div>
   </div>
 </template>
