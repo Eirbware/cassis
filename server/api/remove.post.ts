@@ -1,17 +1,3 @@
-const shorten = (num: number) => {
-  const alphabet: string = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789$_+!*()'
-  let result: string = ''
-
-  const size = alphabet.length
-
-  while (num > 0) {
-    result = alphabet[num % size] + result
-    num = Math.floor(num / size)
-  }
-
-  return result
-}
-
 export default defineEventHandler(async (event) => {
   const token = getQuery(event).token
 
