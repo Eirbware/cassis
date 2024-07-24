@@ -1,6 +1,6 @@
 import { defineMongooseModel } from '#nuxt/mongoose'
 
-export const LinkShema = defineMongooseModel({
+export const LinkShema = defineMongooseModel<Link>({
   name: 'link',
   schema: {
     url: {

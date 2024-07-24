@@ -5,7 +5,7 @@ export default defineEventHandler(async (event) => {
 
   const user = await verifyToken(token as string)
 
-  if (!user.user || !token) {
+  if (!('user' in user) || !token) {
     return {
       statusCode: 401,
       body: {
@@ -30,7 +30,7 @@ export default defineEventHandler(async (event) => {
     }
   }
 
-  if (link.expiresAt && new link.expiresAt() < new Date()) {
+  if (link.expiresAt && link.expiresAt < new Date()) {
     return {
       statusCode: 410,
       statusMessage: 'Lien expiré'

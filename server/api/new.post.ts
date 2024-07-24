@@ -1,3 +1,6 @@
+import { formatURL } from '../utils/URL'
+import { isBodyWithProps } from '../utils/checks'
+
 const shorten = (num: number) => {
   const alphabet: string = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789$_+!*()'
   let result: string = ''
@@ -17,7 +20,7 @@ export default defineEventHandler(async (event) => {
 
   const user = await verifyToken(token as string)
 
-  if (!user.user || !token) {
+  if (!('user' in user) || !token) {
     return {
       statusCode: 401,
       body: {
@@ -26,32 +29,28 @@ export default defineEventHandler(async (event) => {
     }
   }
 
-  const body = await readBody(event)
-
-  const formatURL = (url: string) => {
-    if (!url.startsWith('http://') && !url.startsWith('https://')) {
-      return 'http://' + url
-    }
-    return url
-  }
+  const body = (await readBody(event)) as unknown
 
   try {
-    body.url = formatURL(body.url.toLowerCase())
-
     // Vérification des données
 
-    if (!body.url) {
+    if (!isBodyWithProps(body, ['url'] as const))
       throw createError({
         statusCode: 400,
-        statusMessage: 'Url manquante'
+        statusMessage: 'URL manquante'
       })
-    }
+    if (typeof body.url !== 'string')
+      throw createError({
+        statusCode: 400,
+        statusMessage: 'URL invalide'
+      })
+
+    const url = formatURL(body.url.toLowerCase())
 
     // Si le lien existe déjà, on le retourne
 
-    const link = await LinkShema.findOne({
-      url: body.url
-    })
+    const link = await LinkShema.findOne({ url })
+
     if (link) {
       return {
         uid: link.uid
@@ -61,12 +60,13 @@ export default defineEventHandler(async (event) => {
 
     const date = new Date()
     const entry = await new LinkShema({
-      url: encodeURI(body.url),
+      url: encodeURI(url),
       uid: shorten(date.getTime()),
       createdAt: date,
-      createdBy: body.createdBy,
+      createdBy: user.user,
       visited: 0,
-      expiresAt: body.expiresAt ? new Date(body.expiresAt) : null
+      expiresAt:
+        'expiresAt' in body && typeof body.expiresAt === 'number' ? new Date(body.expiresAt) : null
     }).save()
 
     return {

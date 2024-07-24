@@ -15,30 +15,38 @@
 </template>
 
 <script setup lang="ts">
+import type { SerializedLink } from '~/utils/Link'
+
 definePageMeta({
   middleware: 'auth'
 })
 
-const links = ref<Link[]>([])
+const links = ref<SerializedLink[]>([])
 
+const authStore = useAuthStore()
 
-onMounted(() => {
-  const authStore = useAuthStore()
-
-  const fetchLinks = async (token: string) => {
-    $fetch(`/api/links/${authStore.user?.user}`, {
+async function fetchLinks() {
+  const res = await useFetch<{ statusCode: number; body: SerializedLink[] }>(
+    `/api/links/${authStore.user?.user}`,
+    {
       query: {
-        token: token
+        token: authStore.token
       }
-    }).then((res) => {
-      res.body.forEach((link: unknown) => {
-        links.value.push(link as Link)
-      })
+    }
+  )
+
+  if (res.data.value) {
+    links.value.splice(0)
+
+    res.data.value.body.forEach((link: unknown) => {
+      links.value.push(link as SerializedLink)
     })
   }
+}
 
+onMounted(() => {
   if (authStore.token) {
-    fetchLinks(authStore.token)
+    fetchLinks()
   }
 })
 </script>
