@@ -1,4 +1,5 @@
 import { formatURL } from '../utils/URL'
+import { isBodyWithProps } from '../utils/checks'
 
 export default defineEventHandler(async (event) => {
   const token = getQuery(event).token
@@ -31,16 +32,14 @@ export default defineEventHandler(async (event) => {
         statusMessage: 'UID invalide'
       })
 
-    const uid = formatURL(body.uid.toLowerCase())
-
     // Le Lien existe
 
-    const link = await LinkShema.findOne({ uid })
+    const link = await LinkShema.findOne({ uid: body.uid })
 
     if (!link)
       throw createError({
         statusCode: 400,
-        statusMessage: `Le lien d'UID ${uid} n'existe pas`
+        statusMessage: `Le lien d'UID ${body.uid} n'existe pas`
       })
 
     // Le lien appartient bien à l'utilisateur
@@ -53,7 +52,8 @@ export default defineEventHandler(async (event) => {
 
     // Sinon, on édite le lien
 
-    if (isBodyWithProps(body, ['url'] as const) && typeof body.url === 'string') link.url = body.url
+    if (isBodyWithProps(body, ['url'] as const) && typeof body.url === 'string')
+      link.url = formatURL(body.url)
     if (isBodyWithProps(body, ['expiresAt'] as const)) {
       if (typeof body.expiresAt === 'number') link.expiresAt = new Date(body.expiresAt)
       else if (body.expiresAt === null) link.expiresAt = body.expiresAt
