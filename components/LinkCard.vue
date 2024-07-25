@@ -52,6 +52,9 @@
           <button @click="editing = !editing">
             <EditIcon />
           </button>
+          <button @click="removeLink()">
+            <TrashIcon />
+          </button>
         </div>
         <div v-else class="flex gap-2">
           <input type="url" v-model="editedURL" />
@@ -79,6 +82,7 @@ const props = defineProps<{
 
 const emit = defineEmits<{
   edited: []
+  removed: []
 }>()
 
 const editing = ref(false)
@@ -98,6 +102,18 @@ async function editURL() {
   }
 
   editing.value = false
+}
+
+function removeLink() {
+  const ret = useFetch('/api/remove', {
+    method: 'POST',
+    body: JSON.stringify({ uid: props.link.uid }),
+    query: { token: authStore.token }
+  })
+
+  ret.then(() => {
+    emit('removed')
+  })
 }
 
 const shortUrl = computed(() => {
