@@ -52,7 +52,8 @@ export default defineEventHandler(async (event) => {
 
     // Sinon, on édite le lien
 
-    if (isBodyWithProps(body, ['url'] as const) && typeof body.url === 'string') link.url = body.url
+    if (isBodyWithProps(body, ['url'] as const) && typeof body.url === 'string')
+      link.url = formatURL(body.url)
     if (isBodyWithProps(body, ['expiresAt'] as const)) {
       if (typeof body.expiresAt === 'number') link.expiresAt = new Date(body.expiresAt)
       else if (body.expiresAt === null) link.expiresAt = body.expiresAt
