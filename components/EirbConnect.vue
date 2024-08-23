@@ -1,5 +1,5 @@
 <template>
-  <button
+  <div
     class="ease flex w-fit cursor-pointer flex-row-reverse items-center justify-center gap-2 rounded-sm bg-[#EAB308] p-2 pr-4 transition duration-300 hover:shadow-md"
   >
     <div class="leading-5 text-white flex flex-col items-start">
@@ -79,5 +79,5 @@
         stroke-width="0.5"
       />
     </svg>
-  </button>
+  </div>
 </template>
