@@ -2,7 +2,7 @@ import { formatURL } from '../utils/URL'
 import { isBodyWithProps } from '../utils/checks'
 
 const shorten = (num: number) => {
-  const alphabet: string = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789$_+!*()'
+  const alphabet: string = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789$_'
   let result: string = ''
 
   const size = alphabet.length
