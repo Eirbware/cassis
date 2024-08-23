@@ -7,7 +7,7 @@
           CASSIS permet de protéger et restreindre l'accès à vos liens. Pour accéder à ce lien,
           veuillez vous connecter à l'aide de votre compte CAS Bordeaux INP par EirbConnect
         </p>
-        <LoginComponent />
+        <LoginComponent :cassis_redirect="uid" />
       </div>
       <img
         class="hidden sm:flex"
