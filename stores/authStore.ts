@@ -21,7 +21,6 @@ export const useAuthStore = defineStore('authStore', {
     login(token: string, user: User) {
       this.token = token
       this.user = user
-      navigateTo('/create')
     },
     logout() {
       this.token = null
